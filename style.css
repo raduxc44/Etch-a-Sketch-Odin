@@ -12,11 +12,12 @@ body {
     align-items: center;
     justify-content: center;
 }
-.clear-button {
+.clear-button-container {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-grow: 1;
+    height: min-content;
 }
 button {
     height: 25%;
