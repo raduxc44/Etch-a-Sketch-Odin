@@ -32,38 +32,44 @@ generateInitialSketch();
 clearButton.addEventListener('click', () => {
 
     container.innerHTML = '';
-    generateSketch()
+    checkInput()
 
 })
 
-function generateSketch() {
+function checkInput() {
     userInput = window.prompt(
         'Type a number of squares per line', 'The number should be less than 101')
 
-    if (userInput < 101) {
+
+    function generateSketch() {
         userInput *= userInput;
 
         for (let i = 0; i < userInput; i++) {
             cell = document.createElement('div');
             container.appendChild(cell);
             cell.classList.add('cell');
-            cell.innerHTML = '<p>a</p>';
+            cell.innerHTML = '<p></p>';
             let cellHeight = 78 / parseInt(Math.sqrt(userInput));
             let cellWidth = 50 / parseInt(Math.sqrt(userInput));
             cell.style = `height : ${cellHeight}vh; width : ${cellWidth}vw`;
         }
+
         let nextCellArr = document.querySelectorAll('.cell');
         nextCellArr.forEach(cell => {
 
             cell.addEventListener('mouseover', () => { cellTrail(cell) })
 
-        });
-
+        })
     }
-    else {
+
+
+
+
+    while (userInput > 100) {
         userInput = window.prompt(
             'Type a number of squares per line', 'The number should be less than 101')
     }
-}
+    generateSketch();
 
+}
 
