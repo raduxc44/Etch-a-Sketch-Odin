@@ -16,8 +16,9 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 25vh;
+    width: 15vh;
     height: 8vh;
+    margin: 2vh 0;
 }
 button {
     background-color: orange;
@@ -30,11 +31,10 @@ button {
     flex-grow: 2;
     width: 50vw;
     max-height: 78vh;
-    padding-bottom: 14vh;
+    padding-bottom: 10vh;
 }
 .cell {
     margin:0;
-    
     background-color: red;
 }
 .MouseOn {
