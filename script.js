@@ -14,6 +14,9 @@ function generateInitialSketch() {
         container.appendChild(cell);
         cell.classList.add('cell');
         cell.innerHTML = '<p></p>';
+        let cellHeight = 78 / parseInt(16);
+        let cellWidth = 50 / parseInt(16);
+        cell.style = `height : ${cellHeight}vh; width : ${cellWidth}vw`;
     }
 
     let initialCellArr = document.querySelectorAll('.cell');
@@ -44,7 +47,10 @@ function generateSketch() {
             cell = document.createElement('div');
             container.appendChild(cell);
             cell.classList.add('cell');
-            cell.innerHTML = '<p></p>';
+            cell.innerHTML = '<p>a</p>';
+            let cellHeight = 78 / parseInt(Math.sqrt(userInput));
+            let cellWidth = 50 / parseInt(Math.sqrt(userInput));
+            cell.style = `height : ${cellHeight}vh; width : ${cellWidth}vw`;
         }
         let nextCellArr = document.querySelectorAll('.cell');
         nextCellArr.forEach(cell => {
@@ -53,6 +59,10 @@ function generateSketch() {
 
         });
 
+    }
+    else {
+        userInput = window.prompt(
+            'Type a number of squares per line', 'The number should be less than 101')
     }
 }
 
