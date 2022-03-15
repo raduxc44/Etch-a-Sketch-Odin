@@ -4,10 +4,25 @@ const body = document.body;
 let container = document.querySelector('.grid-container');
 let cell;
 let clearButton = document.querySelector('.clear-button');
+let red;
+let green;
+let blue;
 
-function cellTrail(cell) {
-    cell.classList.add('MouseOn');
+function colorPick(cell) {
+    red = Math.floor(Math.random() * 255);
+    green = Math.floor(Math.random() * 255);
+    blue = Math.floor(Math.random() * 255);
+    cell.style.backgroundColor = `rgb(${red} ${green} ${blue})`;
 }
+
+function darkenColor(cell) {
+    red = red - (red * 10 / 100);
+    green = green - (green * 10 / 100);
+    blue = blue - (blue * 10 / 100);
+    cell.style.backgroundColor = `rgb(${red} ${green} ${blue})`;
+}
+
+
 
 // The function that draws the first Sketch
 
@@ -28,7 +43,8 @@ function generateInitialSketch() {
     let initialCellArr = document.querySelectorAll('.cell');
     initialCellArr.forEach(cell => {
 
-        cell.addEventListener('mouseover', () => { cellTrail(cell) })
+        cell.addEventListener('mouseover', () => { colorPick(cell) }, { once: true });
+        cell.addEventListener('mouseover', () => { darkenColor(cell), { once: true } })
 
     });
 }
