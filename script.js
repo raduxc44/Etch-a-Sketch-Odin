@@ -1,10 +1,98 @@
 // Initial variable declarations
-const COLOURED_ATTR = "cellColoured";
+
 const body = document.body;
 let container = document.querySelector('.grid-container');
 let clearButton = document.querySelector('.clear-button');
+let userInput;
+const COLOURED_ATTR = "cellColoured";
 
-// This function 
+// The function that draws the first Sketch
+
+function generateSketch(userInput) {
+    userInput *= userInput;
+
+    for (let i = 0; i < userInput; i++) {
+
+        let cell = document.createElement('div');
+        container.appendChild(cell);
+        cell.classList.add('cell');
+
+        let cellHeight = 78 / parseInt(Math.sqrt(userInput));
+        let cellWidth = 50 / parseInt(Math.sqrt(userInput));
+        cell.style = `height : ${cellHeight}vh; width : ${cellWidth}vw`;
+
+        cell.addEventListener('mouseover', () => handleCellInteraction(cell));
+
+    }
+}
+generateSketch(16);
+
+// The button clears the first sketch then runs the next function
+
+clearButton.addEventListener('click', () => {
+
+    container.innerHTML = '';
+    checkInput()
+
+})
+
+// This function draws the new sketch only if the input is valid
+
+function checkInput() {
+
+    userInput = window.prompt(
+
+        'Type a number of squares per line . The number should be less than 101')
+
+
+    while (userInput > 100) {
+
+        userInput = window.prompt(
+
+            'Please type a valid number! It should be less than 101.'
+
+        )
+    }
+
+    generateSketch(userInput);
+
+}
+
+// This event runs either of the functions if the cell is colored or not already
+
+function handleCellInteraction(cell) {
+
+    if (cell.getAttribute(COLOURED_ATTR)) {
+
+        darkenColor(cell);
+
+    } else {
+
+        cell.setAttribute(COLOURED_ATTR, true);
+        colorPick(cell);
+
+    }
+}
+
+// This function generates every cell color RGB value 
+
+function colorPick(cell) {
+
+    const [red, green, blue] = [generateRGBInt(), generateRGBInt(), generateRGBInt()];
+
+    cell.style.backgroundColor = `rgb(${red} ${green} ${blue})`;
+}
+
+// This generates a random number between 1 and 255 to be used as a RGV value
+
+function generateRGBInt() {
+
+    return Math.floor(Math.random() * 255);
+
+}
+
+/* This transforms the string returned from the colorPick function
+   into an array of integers so it can be used later*/
 
 function rgbCSSToIntArray(rgbString) {
 
@@ -18,18 +106,8 @@ function rgbCSSToIntArray(rgbString) {
 
 }
 
-function generateRGBInt() {
-
-    return Math.floor(Math.random() * 255);
-
-}
-
-function colorPick(cell) {
-
-    const [red, green, blue] = [generateRGBInt(), generateRGBInt(), generateRGBInt()];
-
-    cell.style.backgroundColor = `rgb(${red} ${green} ${blue})`;
-}
+/* Each time you pass through the same cell, this function darkens it's color
+   by 10% */
 
 function darkenColor(cell) {
 
@@ -40,81 +118,5 @@ function darkenColor(cell) {
     blue = blue - (blue * 10 / 100);
 
     cell.style.backgroundColor = `rgb(${red} ${green} ${blue})`;
-}
 
-function handleCellInteraction(cell) {
-    if (cell.getAttribute(COLOURED_ATTR)) {
-        darkenColor(cell);
-    } else {
-        cell.setAttribute(COLOURED_ATTR, true);
-        colorPick(cell);
-    }
-}
-
-
-// The function that draws the first Sketch
-
-function generateInitialSketch() {
-
-    for (let i = 0; i < 256; i++) {
-        let cell = document.createElement('div');
-        container.appendChild(cell);
-        cell.classList.add('cell');
-        let cellHeight = 78 / 16;
-        let cellWidth = 50 / 16;
-        cell.style = `height : ${cellHeight}vh; width : ${cellWidth}vw`;
-        cell.addEventListener('mouseover', () => handleCellInteraction(cell));
-    }
-
-    let initialCellArr = document.querySelectorAll('.cell');
-}
-generateInitialSketch();
-
-// The button clears the first sketch then runs the next function
-
-clearButton.addEventListener('click', () => {
-
-    container.innerHTML = '';
-    checkInput()
-
-})
-
-// This function runs draws the new sketch only if the input is valid
-
-function checkInput() {
-
-    userInput = window.prompt(
-        'Type a number of squares per line',
-        'The number should be less than 101')
-
-    function generateSketch() {
-        userInput *= userInput;
-
-        for (let i = 0; i < userInput; i++) {
-            cell = document.createElement('div');
-            container.appendChild(cell);
-            cell.classList.add('cell');
-            cell.innerHTML = '<p></p>';
-            let cellHeight = 78 / parseInt(Math.sqrt(userInput));
-            let cellWidth = 50 / parseInt(Math.sqrt(userInput));
-            cell.style = `height : ${cellHeight}vh; width : ${cellWidth}vw`;
-        }
-
-        let nextCellArr = document.querySelectorAll('.cell');
-        nextCellArr.forEach(cell => {
-
-            cell.addEventListener('mouseover', () => { cellTrail(cell) })
-
-        })
-    }
-
-    while (userInput > 100) {
-
-        userInput = window.prompt(
-            'Type a number of squares per line',
-            'The number should be less than 101')
-
-    }
-
-    generateSketch();
 }
