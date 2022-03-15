@@ -3,10 +3,22 @@
 const body = document.body;
 let container = document.querySelector('.grid-container');
 let clearButton = document.querySelector('.clear-button');
-let userInput;
 const COLOURED_ATTR = "cellColoured";
 
-// The function that draws the first Sketch
+//This draws the first 16x16 sketch
+
+generateSketch(16);
+
+// The button clears the first sketch then runs the next function
+
+clearButton.addEventListener('click', () => {
+
+    container.innerHTML = '';
+    checkInput()
+
+})
+
+// The function that draws a Sketch
 
 function generateSketch(userInput) {
     userInput *= userInput;
@@ -25,27 +37,18 @@ function generateSketch(userInput) {
 
     }
 }
-generateSketch(16);
 
-// The button clears the first sketch then runs the next function
-
-clearButton.addEventListener('click', () => {
-
-    container.innerHTML = '';
-    checkInput()
-
-})
 
 // This function draws the new sketch only if the input is valid
 
 function checkInput() {
 
-    userInput = window.prompt(
+    let userInput = window.prompt(
 
         'Type a number of squares per line . The number should be less than 101')
 
 
-    while (userInput > 100) {
+    while (userInput > 100 || userInput < 1) {
 
         userInput = window.prompt(
 
