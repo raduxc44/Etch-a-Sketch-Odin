@@ -1,27 +1,46 @@
 // Initial variable declarations
+const COLOURED_ATTR = "cellColoured";
 
 const body = document.body;
 let container = document.querySelector('.grid-container');
-let cell;
 let clearButton = document.querySelector('.clear-button');
-let red;
-let green;
-let blue;
+
+function rgbCSSToIntArray(rgbString) {
+    const onlyValuesString = rgbString.slice(4, rgbString.length - 2).replaceAll(" ", "");
+
+    const strArray = onlyValuesString.split(",");
+
+    return strArray.map(Number);
+}
+
+function generateRGBInt() {
+    return Math.floor(Math.random() * 255);
+}
 
 function colorPick(cell) {
-    red = Math.floor(Math.random() * 255);
-    green = Math.floor(Math.random() * 255);
-    blue = Math.floor(Math.random() * 255);
+    const [red, green, blue] = [generateRGBInt(), generateRGBInt(), generateRGBInt()];
+
     cell.style.backgroundColor = `rgb(${red} ${green} ${blue})`;
 }
 
 function darkenColor(cell) {
+    let [red, green, blue] = rgbCSSToIntArray(cell.style.backgroundColor);
+
     red = red - (red * 10 / 100);
     green = green - (green * 10 / 100);
     blue = blue - (blue * 10 / 100);
+
     cell.style.backgroundColor = `rgb(${red} ${green} ${blue})`;
 }
 
+function handleCellInteraction(cell) {
+    if (cell.getAttribute(COLOURED_ATTR)) {
+        darkenColor(cell);
+    } else {
+        cell.setAttribute(COLOURED_ATTR, true);
+        colorPick(cell);
+    }
+}
 
 
 // The function that draws the first Sketch
@@ -29,24 +48,17 @@ function darkenColor(cell) {
 function generateInitialSketch() {
 
     for (let i = 0; i < 256; i++) {
-
-        cell = document.createElement('div');
+        let cell = document.createElement('div');
         container.appendChild(cell);
         cell.classList.add('cell');
         cell.innerHTML = '<p></p>';
         let cellHeight = 78 / parseInt(16);
         let cellWidth = 50 / parseInt(16);
         cell.style = `height : ${cellHeight}vh; width : ${cellWidth}vw`;
-
+        cell.addEventListener('mouseover', () => handleCellInteraction(cell));
     }
 
     let initialCellArr = document.querySelectorAll('.cell');
-    initialCellArr.forEach(cell => {
-
-        cell.addEventListener('mouseover', () => { colorPick(cell) }, { once: true });
-        cell.addEventListener('mouseover', () => { darkenColor(cell), { once: true } })
-
-    });
 }
 generateInitialSketch();
 
