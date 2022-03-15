@@ -48,7 +48,7 @@ function checkInput() {
         'Type a number of squares per line . The number should be less than 101')
 
 
-    while (userInput > 100 || userInput < 1) {
+    while (userInput > 100 || userInput < 1 || typeof (userInput) !== 'number') {
 
         userInput = window.prompt(
 
