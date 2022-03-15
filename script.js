@@ -1,29 +1,38 @@
 // Initial variable declarations
 const COLOURED_ATTR = "cellColoured";
-
 const body = document.body;
 let container = document.querySelector('.grid-container');
 let clearButton = document.querySelector('.clear-button');
 
+// This function 
+
 function rgbCSSToIntArray(rgbString) {
+
     const onlyValuesString = rgbString.slice(4, rgbString.length - 2).replaceAll(" ", "");
 
     const strArray = onlyValuesString.split(",");
 
+    console.log(strArray.map(Number))
+
     return strArray.map(Number);
+
 }
 
 function generateRGBInt() {
+
     return Math.floor(Math.random() * 255);
+
 }
 
 function colorPick(cell) {
+
     const [red, green, blue] = [generateRGBInt(), generateRGBInt(), generateRGBInt()];
 
     cell.style.backgroundColor = `rgb(${red} ${green} ${blue})`;
 }
 
 function darkenColor(cell) {
+
     let [red, green, blue] = rgbCSSToIntArray(cell.style.backgroundColor);
 
     red = red - (red * 10 / 100);
@@ -51,9 +60,8 @@ function generateInitialSketch() {
         let cell = document.createElement('div');
         container.appendChild(cell);
         cell.classList.add('cell');
-        cell.innerHTML = '<p></p>';
-        let cellHeight = 78 / parseInt(16);
-        let cellWidth = 50 / parseInt(16);
+        let cellHeight = 78 / 16;
+        let cellWidth = 50 / 16;
         cell.style = `height : ${cellHeight}vh; width : ${cellWidth}vw`;
         cell.addEventListener('mouseover', () => handleCellInteraction(cell));
     }
