@@ -43,16 +43,15 @@ function generateSketch(userInput) {
 
 function checkInput() {
 
-    let userInput = window.prompt(
+    let userInput = Number(window.prompt(
 
-        'Type a number of squares per line . The number should be less than 101')
+        'Type a number of squares per line . The number should be less than 101'))
 
-
-    while (userInput > 100 || userInput < 1 || typeof (userInput) !== 'number') {
+    while (userInput > 100 || userInput < 1 || isNaN(userInput)) {
 
         userInput = window.prompt(
 
-            'Please type a valid number! It should be less than 101.'
+            'MAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAARSSSSSSSSSSSSSSSSS'
 
         )
     }
@@ -102,8 +101,6 @@ function rgbCSSToIntArray(rgbString) {
     const onlyValuesString = rgbString.slice(4, rgbString.length - 2).replaceAll(" ", "");
 
     const strArray = onlyValuesString.split(",");
-
-    console.log(strArray.map(Number))
 
     return strArray.map(Number);
 
