@@ -51,7 +51,7 @@ function checkInput() {
 
         userInput = window.prompt(
 
-            'MAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAARSSSSSSSSSSSSSSSSS'
+            'The number should be between 1 and 100!'
 
         )
     }
